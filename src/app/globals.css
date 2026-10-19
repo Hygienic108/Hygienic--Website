@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.font-brand {
+  font-family: var(--font-brand);
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+/* ========================================
+   HYGIENIC PREMIUM DESIGN SYSTEM
+======================================== */
+
+:root {
+  --hygienic-navy: #07152F;
+  --hygienic-dark: #0F172A;
+  --hygienic-blue: #2F36D9;
+  --hygienic-blue-light: #60A5FA;
+  --hygienic-soft-blue: #DBEAFE;
+  --hygienic-muted: #94A3B8;
+  --hygienic-white: #FFFFFF;
+}
+
+/* Premium glow */
+.hygienic-glow {
+  box-shadow:
+    0 0 20px rgba(47, 54, 217, 0.25),
+    0 0 60px rgba(47, 54, 217, 0.12);
+}
+
+/* Blue text glow */
+.hygienic-text-glow {
+  text-shadow:
+    0 0 12px rgba(96, 165, 250, 0.45),
+    0 0 30px rgba(47, 54, 217, 0.25);
+}
+
+/* Section divider */
+.hygienic-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(47, 54, 217, 0.5),
+    transparent
+  );
+}
+
+/* Section label underline */
+.hygienic-label-line {
+  width: 70px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    #2F36D9,
+    #60A5FA,
+    transparent
+  );
+  box-shadow: 0 0 12px rgba(47, 54, 217, 0.7);
+}
