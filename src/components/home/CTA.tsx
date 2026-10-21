@@ -7,21 +7,71 @@ import { motion } from "framer-motion";
 export default function CTA() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
     setIsSubmitting(true);
     setSubmitted(false);
+    setErrorMessage("");
 
-    // Temporary submission simulation.
-    // Email/API integration can be added later.
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const response = await fetch("/api/forms", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          email: formData.get("email"),
+          phone: formData.get("phone"),
+          enquiryType: formData.get("enquiryType"),
+          message: formData.get("message"),
+        }),
+      });
 
-    setIsSubmitting(false);
-    setSubmitted(true);
+      
+const responseText = await response.text();
 
-    e.currentTarget.reset();
+let result: {
+  success?: boolean;
+  message?: string;
+};
+
+try {
+  result = JSON.parse(responseText);
+} catch {
+  console.error("Invalid API response:", responseText);
+
+  throw new Error(
+    "The server returned an invalid response. Please check the API route and terminal for errors."
+  );
+}
+
+if (!response.ok || !result.success) {
+  throw new Error(
+    result.message || "Unable to submit your enquiry."
+  );
+}
+
+
+      setSubmitted(true);
+      form.reset();
+    } catch (error) {
+      console.error("Enquiry submission failed:", error);
+
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -55,7 +105,7 @@ export default function CTA() {
           </p>
         </div>
 
-        {/* Enquiry Card - No entrance animation */}
+        {/* Enquiry Card */}
         <div className="relative max-w-4xl mx-auto rounded-[2rem] border border-[#2F36D9]/40 bg-[#0F172A]/90 backdrop-blur-md p-8 md:p-12 shadow-[0_0_60px_rgba(47,54,217,0.12)]">
           {/* Top Decorative Line */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-px bg-gradient-to-r from-transparent via-[#60A5FA] to-transparent" />
@@ -76,9 +126,9 @@ export default function CTA() {
               animate={{ opacity: 1, y: 0 }}
               className="mb-8 rounded-xl border border-[#60A5FA]/30 bg-[#60A5FA]/10 px-5 py-4 text-center"
             >
-              <p className="font-body text-[#DBEAFE]">
-                Thank you! Your enquiry has been submitted successfully.
-              </p>
+              <div className="rounded-xl border border-emerald-400/40 bg-emerald-400/10 px-6 py-5 text-center text-emerald-200 shadow-[0_0_20px_rgba(52,211,153,0.15)]">
+  Thank you! Your enquiry has been submitted successfully.
+</div>
             </motion.div>
           )}
 
@@ -190,6 +240,16 @@ export default function CTA() {
                 className="w-full px-5 py-4 rounded-xl bg-[#07152F] border border-[#1E3A8A]/60 text-white placeholder:text-[#64748B] font-body outline-none resize-none focus:border-[#60A5FA] focus:ring-1 focus:ring-[#60A5FA]/30 transition-all duration-300"
               />
             </div>
+
+            {/* Error Message */}
+            {errorMessage && (
+              <p
+                role="alert"
+                className="text-center text-sm text-red-400"
+              >
+                {errorMessage}
+              </p>
+            )}
 
             {/* Submit */}
             <div className="flex justify-center pt-3">

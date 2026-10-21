@@ -64,8 +64,8 @@ export default function Navbar() {
         });
       }
     } else {
-  window.location.href = href;
-}
+      router.push(href);
+    }
   };
 
   return (

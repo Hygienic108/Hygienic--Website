@@ -13,22 +13,22 @@ export default function ProductSlider() {
       subtitle: "Premium Cleaning Solutions",
     },
     {
-      image: "/products/fcprd.png",
+      image: "/products/fccprd.png",
       title: "Floor Cleaner",
       subtitle: "Advanced Floor Care",
     },
     {
-      image: "/logo.png",
+      image: "/products/tccprd.png",
       title: "Toilet Cleaner",
       subtitle: "Powerful Bathroom Cleaning",
     },
     {
-      image: "/products/gcprd.png",
-      title: "Glass Cleaner",
+      image: "/products/gccprd.png",
+      title: "Floor Disinfectants",
       subtitle: "Crystal Clear Shine",
     },
     {
-      image: "/products/dlprd.png",
+      image: "/products/dsprd.png",
       title: "Dish Wash Liquid",
       subtitle: "Tough on Grease",
     },
@@ -55,14 +55,49 @@ export default function ProductSlider() {
   }, [slides.length]);
 
   return (
-    <div className="relative w-full aspect-square max-w-[550px] rounded-full bg-[#DBEAFE]/10 border border-[#1E3A8A]/30 backdrop-blur-sm shadow-[0_0_60px_rgba(47,54,217,0.25)] flex items-center justify-center overflow-hidden">
+    <div className="relative aspect-square w-full max-w-[550px] overflow-hidden rounded-full border border-[#1E3A8A]/40 shadow-[0_0_60px_rgba(47,54,217,0.25)]">
+
+      {/* Full-Circle Background Image */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={current}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="absolute inset-0"
+        >
+          <Image
+            src={slides[current].image}
+            alt={slides[current].title}
+            fill
+            sizes="(max-width: 640px) 100vw, 550px"
+            className={
+              current === 0
+                ? "object-contain p-16 sm:p-20 lg:p-24"
+                : "object-cover"
+            }
+            priority={current === 0}
+          />
+
+          {/* Dark Gradient for Text Readability */}
+          
+<div
+  className={`absolute inset-0 ${
+    current === 0
+      ? "bg-gradient-to-b from-[#07152F]/10 via-[#07152F]/20 to-[#07152F]/95"
+      : "bg-gradient-to-b from-[#07152F]/5 via-[#07152F]/20 via-55% to-[#07152F]/95"
+  }`}
+/>
+        </motion.div>
+      </AnimatePresence>
 
       {/* Previous Button */}
       <button
         type="button"
         onClick={prevSlide}
         aria-label="Previous product"
-        className="absolute left-2 sm:left-4 lg:left-6 z-10 flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 lg:w-12 lg:h-12 rounded-full bg-white/10 border border-white/20 text-white backdrop-blur-md hover:bg-white/20 transition"
+        className="absolute left-2 top-1/2 z-30 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-[#07152F]/50 text-white backdrop-blur-md transition hover:bg-white/20 sm:left-4 sm:h-11 sm:w-11 lg:left-6 lg:h-12 lg:w-12"
       >
         ◀
       </button>
@@ -72,56 +107,63 @@ export default function ProductSlider() {
         type="button"
         onClick={nextSlide}
         aria-label="Next product"
-        className="absolute right-2 sm:right-4 lg:right-6 z-10 flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 lg:w-12 lg:h-12 rounded-full bg-white/10 border border-white/20 text-white backdrop-blur-md hover:bg-white/20 transition"
+        className="absolute right-2 top-1/2 z-30 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-[#07152F]/50 text-white backdrop-blur-md transition hover:bg-white/20 sm:right-4 sm:h-11 sm:w-11 lg:right-6 lg:h-12 lg:w-12"
       >
         ▶
       </button>
 
-      {/* Slide Content */}
-      <div className="w-full min-w-0 px-12 sm:px-16 lg:px-20 flex items-center justify-center">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current}
-            initial={{ opacity: 0, x: 25 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -25 }}
-            transition={{ duration: 0.4 }}
-            className="w-full min-w-0 flex flex-col items-center text-center"
-          >
-            <div className="relative w-28 h-28 sm:w-36 sm:h-36 lg:w-52 lg:h-52">
-              <Image
-                src={slides[current].image}
-                alt={slides[current].title}
-                fill
-                sizes="(max-width: 640px) 112px, (max-width: 1024px) 144px, 208px"
-                className="object-contain"
-                priority={current === 0}
-              />
-            </div>
+      
+{/* Product Information */}
+<div
+  className={`absolute inset-x-0 bottom-0 z-20 flex flex-col items-center px-12 text-center sm:px-14 ${
+    current === 0
+      ? "pb-12 sm:pb-14 lg:pb-16"
+      : "pb-10 sm:pb-12 lg:pb-14"
+  }`}
+>
+  <AnimatePresence mode="wait">
+    <motion.div
+      key={current}
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.4 }}
+      className="w-full min-w-0"
+    >
+      <h2
+        className={`${
+          current === 0
+            ? "font-brand text-3xl sm:text-4xl lg:text-5xl"
+            : "font-heading text-2xl font-semibold tracking-wide sm:text-3xl lg:text-5xl"
+        } break-words text-white ${
+          current === 0
+            ? ""
+            : "[text-shadow:0_2px_12px_rgba(0,0,0,0.9)]"
+        }`}
+      >
+        {slides[current].title}
+      </h2>
 
-            <h2
-              className={`${
-                current === 0
-                  ? "font-brand text-3xl sm:text-4xl lg:text-5xl"
-                  : "font-heading text-2xl sm:text-3xl lg:text-5xl tracking-wide"
-              } text-white mt-4 sm:mt-6 max-w-full break-words`}
-            >
-              {slides[current].title}
-            </h2>
+      <p
+        className={`font-body mt-2 break-words text-sm sm:text-base ${
+          current === 0
+            ? "text-white"
+            : "font-medium text-white [text-shadow:0_2px_8px_rgba(0,0,0,0.95)]"
+        }`}
+      >
+        {slides[current].subtitle}
+      </p>
 
-            <p className="font-body text-sm sm:text-base text-[#94A3B8] mt-2 max-w-full break-words">
-              {slides[current].subtitle}
-            </p>
+      {current !== 0 && (
+        <div className="mt-3">
+          <span className="font-body text-sm font-semibold text-white [text-shadow:0_2px_8px_rgba(0,0,0,0.95)]">
+            Learn More →
+          </span>
+        </div>
+      )}
+    </motion.div>
+  </AnimatePresence>
 
-            {current !== 0 && (
-              <div className="mt-3">
-                <span className="font-body text-sm text-[#DBEAFE]">
-                  Learn More →
-                </span>
-              </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
       </div>
     </div>
   );

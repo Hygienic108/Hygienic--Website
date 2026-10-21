@@ -13,8 +13,13 @@ export default function Hero() {
 
           {/* Hero Content */}
           <motion.div
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={
+  typeof window !== "undefined" && window.location.hash === "#contact"
+    ? false
+    : { opacity: 0, y: 25 }
+}
+animate={{ opacity: 1, y: 0 }}
+            
             transition={{ duration: 0.7 }}
             className="w-full min-w-0 text-center lg:text-left"
           >
@@ -47,8 +52,12 @@ export default function Hero() {
 
           {/* Product Slider */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={
+  typeof window !== "undefined" && window.location.hash === "#contact"
+    ? false
+    : { opacity: 0, y: 20 }
+}
+animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
             className="w-full min-w-0 flex justify-center mt-2 lg:mt-0"
           >
